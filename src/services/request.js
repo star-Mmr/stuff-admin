@@ -1,47 +1,34 @@
-import axios from 'axios'
+import CghRequest from './request'
 
-import { BASE_URL, TIMEOUT } from './config'
+import { BASE_URL, TIMEOUT } from './request/config'
 
-const instance = axios.create({
+const cghRequest = new CghRequest({
   baseURL: BASE_URL,
-  timeout: TIMEOUT
-})
+  timeout: TIMEOUT,
+  //单个实例对象的拦截器
+  interceptors: {
+    requestInterceptor: config => {
+      //1、在发送网络请求时，在页面中间显示一个loadding组件
 
-//请求拦截
-instance.interceptors.request.use(
-  (config) => {
-    //1、在发送网络请求时，在页面中间显示一个loadding组件
+      //2、某一些请求需要用户携带token，如果没有携带，直接跳转到登录页面
+      console.log('单个实例的请求拦截')
 
-    //2、某一些请求需要用户携带token，如果没有携带，直接跳转到登录页面
+      //3、对params和data进行序列化操作
 
-    //3、对params和data进行序列化操作
+      return config
+    },
+    requestInterceptorCatch: err => {
 
-    return config
-  },
-  (err) => {}
-)
-
-//响应拦截
-instance.interceptors.response.use(
-  (res) => {
-    return res.data
-  },
-  (err) => {
-    if (err && err.response) {
-      switch (err.response.status) {
-        case 400:
-          console.log('请求错误')
-          break
-        case 401:
-          console.log('未授权')
-          break
-        default:
-          console.log('其他错误')
-      }
+      return err
+    },
+    responseInterceptor: res => {
+      return res.data
+    },
+    responseInterceptorCatch: err => {
+      return err
     }
-
-    return err
   }
-)
+}) 
 
-export default instance
+
+export default cghRequest
