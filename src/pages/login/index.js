@@ -1,8 +1,12 @@
 import React, { memo } from 'react'
 
+import LoginWapper from './style';
+
 const Login = memo(() => {
   return (
-    <div>Login</div>
+    <LoginWapper>
+      login
+    </LoginWapper>
   )
 })
 

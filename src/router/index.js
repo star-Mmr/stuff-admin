@@ -1,14 +1,18 @@
-import {lazy} from 'react';
+import {Redirect} from 'react-router-dom'
+
+import loginRouter from './login/login';
+import mainRouter from './main/main';
 
 const routes = [
   {
-    path: '/login',
-    component: lazy(() => import('@/pages/login'))
+    path: '/',
+    exact: true,
+    render: () => {
+      return <Redirect to='/login'/>
+    }
   },
-  {
-    path: '/main',
-    component: lazy(() => import('@/pages/main'))
-  }
+  ...loginRouter,
+  ...mainRouter
 ]
 
 export default routes

@@ -1,23 +1,26 @@
-import React, { memo } from 'react'
+import React, { memo,Suspense } from 'react'
 
-import {BrowserRouter, NavLink} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-import {renderRoutes} from 'react-router-config';
+import { renderRoutes } from 'react-router-config';
 
 import routes from '@/router';
+import styled from 'styled-components'
+
+const AppWapper = styled.div`
+  height: 100%;
+`
 
 
 const App = memo(() => {
   return (
-    <BrowserRouter>
-      <NavLink to='/login'>Login</NavLink>
-      <NavLink to='/mian'>Main</NavLink>
-      <div>
-      {renderRoutes(routes)}
-      </div>
-    </BrowserRouter>
-    
+    <AppWapper>
+      <Suspense fallback={<div>XXXX</div>}>
+        {renderRoutes(routes)}
+      </Suspense>
+    </AppWapper>
+      
   )
 })
 
-export default App
+export default withRouter(App)
