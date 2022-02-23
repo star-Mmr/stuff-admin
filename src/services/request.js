@@ -11,7 +11,11 @@ const cghRequest = new CghRequest({
       //1、在发送网络请求时，在页面中间显示一个loadding组件
 
       //2、某一些请求需要用户携带token，如果没有携带，直接跳转到登录页面
-      console.log('单个实例的请求拦截')
+      // console.log('单个实例的请求拦截')
+      const token = ''
+      if(token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
 
       //3、对params和data进行序列化操作
 

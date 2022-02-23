@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import '@/assets/css/reset.css';
+import store from './store';
 
 import App from './App';
+
 
 // import {BASE_URL,TIMEOUT} from './services/request/config'
 // import axios from 'axios' 
@@ -23,9 +26,11 @@ import App from './App';
 
 
 ReactDOM.render(
-  <BrowserRouter>
-   <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App /> 
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
